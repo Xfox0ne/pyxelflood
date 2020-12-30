@@ -45,5 +45,3 @@ for x in range(0, threadcount):
 
 for thread in threadList:
   thread.join()
-
-    
