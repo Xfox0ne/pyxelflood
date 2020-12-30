@@ -30,7 +30,7 @@ x = 0
 for i in range(0, width):
   for j in range(0, heigth):
       r, g, b = rgb_im.getpixel((i, j))
-      stringX = ('PX %d %d %02x%02x%02x\n' % (i,j,r,g,b))
+      stringX = ('PX %d %d %02x%02x%02x\n' % (i +xoffset,j +yoffset,r,g,b))
       stringList[x] += stringX
       x += 1
       if(x >= threadcount):
