@@ -25,11 +25,15 @@ def pixel(x,y,r,g,b,a=255):
   else:
     send(b'PX %d %d %02x%02x%02x%02x\n' % (x,y,r,g,b,a))
 
+threadList = []
+
+for i in range(0, width):
+    for j in range(0, heigth):
+        r, g, b = rgb_im.getpixel((i, j))
+        x = threading.Thread(target=pixel, args=(i + xoffset, j + yoffset, r, g, b), daemon=True)
+        x.start()
+        threadList.append(x)
+
 while True:
-    for i in range(0, width):
-        for j in range(0, heigth):
-            r, g, b = rgb_im.getpixel((i, j))
-            x = threading.Thread(target=pixel, args=(i + xoffset, j + yoffset, r, g, b), daemon=True)
-            x.start()
-    xoffset += xmotion
-    yoffset += ymotion
+    for thread in threadList:
+      thread.join()
