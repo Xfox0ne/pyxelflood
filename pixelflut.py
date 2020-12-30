@@ -33,7 +33,7 @@ for i in range(0, width):
       r, g, b = rgb_im.getpixel((i, j))
       stringList[x].join('PX %d %d %02x%02x%02x\n' % (i,j,r,g,b))
       x += 1
-      if(x > threadcount):
+      if(x >= threadcount):
         x = 0
 
 threadList = []
