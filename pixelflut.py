@@ -2,8 +2,8 @@ import socket
 import threading
 from PIL import Image
 
-HOST = '127.0.0.1'
-PORT = 8080
+HOST = 'box.pixel-competition.de'
+PORT = 2342
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((HOST, PORT))
 send = sock.send
