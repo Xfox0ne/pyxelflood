@@ -2,8 +2,8 @@ import socket
 import threading
 from PIL import Image
 
-HOST = 'box.pixel-competition.de'
-PORT = 2342
+HOST = ''
+PORT = 1234
 
 xoffset = int(input("X Offset: "))
 yoffset = int(input("Y Offset: "))
@@ -30,13 +30,14 @@ x = 0
 for i in range(0, width):
   for j in range(0, heigth):
       r, g, b = rgb_im.getpixel((i, j))
-      stringList[x].join('PX %d %d %02x%02x%02x\n' % (i,j,r,g,b))
+      stringX = ('PX %d %d %02x%02x%02x\n' % (i,j,r,g,b))
+      stringList[x] += stringX
       x += 1
       if(x >= threadcount):
         x = 0
 
 threadList = []
-
+print(stringList[0])
 for x in range(0, threadcount):
   t = threading.Thread(target=pixel, args=(stringList[x], ), daemon=True)
   t.start()
