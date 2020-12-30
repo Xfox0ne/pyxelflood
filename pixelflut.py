@@ -7,40 +7,39 @@ PORT = 2342
 
 xoffset = int(input("X Offset: "))
 yoffset = int(input("Y Offset: "))
-
-xmotion = int(input("X Motion: "))
-ymotion = int(input("Y Motion: "))
+threadcount = int(input("Threads: "))
 
 im = Image.open('image.jpg')
 rgb_im = im.convert('RGB')
 width = rgb_im.size[0]
 heigth = rgb_im.size[1]
 
-def pixel(x,y,r,g,b,a=255):
+def pixel(command):
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   sock.connect((HOST, PORT))
   send = sock.send
 
-  if a == 255:
-    send(b'PX %d %d %02x%02x%02x\n' % (x,y,r,g,b))
-  else:
-    send(b'PX %d %d %02x%02x%02x%02x\n' % (x,y,r,g,b,a))
+  send(b'%s' %(command))
 
-threadList = []
+stringList = []
 
-while(True):
-  for i in range(0, width):
-      for j in range(0, heigth):
-          r, g, b = rgb_im.getpixel((i, j))
-          x = threading.Thread(target=pixel, args=(i + xoffset, j + yoffset, r, g, b), daemon=True)
-          x.start()
-          threadList.append(x)
+for i in range(0, width):
+  stringX = ""
+  for j in range(0, heigth):
+      r, g, b = rgb_im.getpixel((i, j))
+      stringX.join('PX %d %d %02x%02x%02x\n' % (i,j,r,g,b))
+  stringList.append(stringX)
 
-      for thread in threadList:
-        thread.join()
-      threadList = []
+currentText = 0
 
+while True:
+  threadList = []
 
-#while True:
-#    for thread in threadList:
-#      thread.join()
+  for i in range(0, threadcount):
+    t = threading.Thread(target=pixel, args=stringList[currentText], daemon=True)
+    t.start()
+    threadList.append(t)
+    currentText += 1
+
+  for thread in threadList:
+    thread.join()
