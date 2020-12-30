@@ -30,16 +30,14 @@ for i in range(0, width):
       stringX.join('PX %d %d %02x%02x%02x\n' % (i,j,r,g,b))
   stringList.append(stringX)
 
-currentText = 0
 
 while True:
-  threadList = []
+  for i in range(0, len(stringList)):
+    threadList = []
+    for x in range(0, threadcount):
+      t = threading.Thread(target=pixel, args=stringList[i], daemon=True)
+      t.start()
+      threadList.append(t)
 
-  for i in range(0, threadcount):
-    t = threading.Thread(target=pixel, args=stringList[currentText], daemon=True)
-    t.start()
-    threadList.append(t)
-    currentText += 1
-
-  for thread in threadList:
-    thread.join()
+    for thread in threadList:
+      thread.join()
