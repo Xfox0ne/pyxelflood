@@ -15,12 +15,11 @@ width = rgb_im.size[0]
 heigth = rgb_im.size[1]
 
 def pixel(command):
+  sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  sock.connect((HOST, PORT))
+  send = sock.send
   while True:
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((HOST, PORT))
-    send = sock.send
-
-    send(b'%s' % (command))
+    send(bytes(command, 'utf-8'))
 
 stringList = []
 
@@ -39,7 +38,7 @@ for i in range(0, width):
 threadList = []
 
 for x in range(0, threadcount):
-  t = threading.Thread(target=pixel, args=stringList[x], daemon=True)
+  t = threading.Thread(target=pixel, args=(stringList[x], ), daemon=True)
   t.start()
   threadList.append(t)
 
