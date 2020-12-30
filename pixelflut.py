@@ -2,7 +2,7 @@ import socket
 import threading
 from PIL import Image
 
-HOST = ''
+HOST = 'pixelflut.rc3.io'
 PORT = 1234
 
 xoffset = int(input("X Offset: "))
@@ -37,7 +37,7 @@ for i in range(0, width):
         x = 0
 
 threadList = []
-print(stringList[0])
+
 for x in range(0, threadcount):
   t = threading.Thread(target=pixel, args=(stringList[x], ), daemon=True)
   t.start()
