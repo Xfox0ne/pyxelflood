@@ -1,8 +1,9 @@
 # working-flood
 
-A simple pixelflut client in python.
+A simple client for the hacker partygame "Pixelflut" written in Python.
 It's not very powerful yet, but it gets the job done.
 
 Planned features: 
-- mp4 playback
+- mp4 support
+- gif support
 - bandwith settings
