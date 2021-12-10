@@ -2,8 +2,8 @@ import socket
 import threading
 from PIL import Image
 
-HOST = 'box.pixel-competition.de'
-PORT = 2342
+HOST = 'INSERT IP OR URL HERE'
+PORT = 1337
 
 xoffset = int(input("X Offset: "))
 yoffset = int(input("Y Offset: "))
